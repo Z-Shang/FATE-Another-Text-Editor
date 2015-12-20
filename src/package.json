@@ -1,5 +1,22 @@
 {
     "name" : "YATE",
     "version" : "0.0.1",
-    "main" : "main.js"
+    "description": "Yet Another Text Editor",
+    "main" : "main.js",
+    "scripts": {
+        "start" : "electron main.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/z-shang/yet-another-text-editor.git"
+    },
+    "author": "Z-Shang",
+    "license": "GPL3",
+    "bugs": {
+        "url": "https://github.com/z-shang/yet-another-text-editor/issues"
+    },
+    "homepage": "https://github.com/z-shang/yet-another-text-editor#readme",
+    "devDependencies": {
+        "electron-prebuilt": "^0.36.0"
+    }
 }
