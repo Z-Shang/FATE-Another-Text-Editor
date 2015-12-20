@@ -13,7 +13,7 @@ I just got a 8-inch tablet running Windows 10 and I tried to write some code on 
 - Built-in touch keyboard designed for small touch devices
 - VIM-like multiple modes (so you are freed from poking your screen for a small button)
 - Cross platform (Nah, it is just JavaScript)
-- Probably plugin support
+- Probably plugin support (And less possible: partly compatible with Atom's plugin)
 - You say
 
 ##Copy-Left
