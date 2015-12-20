@@ -16,5 +16,10 @@ I just got a 8-inch tablet running Windows 10 and I tried to write some code on 
 - Probably plugin support (And less possible: partly compatible with Atom's plugin)
 - You say
 
+##NO Mac OS X Support
+Why?
+
+Please find me an OS X touch screen device first.
+
 ##Copy-Left
 Licenced under GPLv3 or any higher version
