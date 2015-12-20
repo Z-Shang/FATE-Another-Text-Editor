@@ -11,7 +11,7 @@
         "url": "git+https://github.com/z-shang/yet-another-text-editor.git"
     },
     "author": "Z-Shang",
-    "license": "GPL3",
+    "license": "GPL-3.0+",
     "bugs": {
         "url": "https://github.com/z-shang/yet-another-text-editor/issues"
     },
