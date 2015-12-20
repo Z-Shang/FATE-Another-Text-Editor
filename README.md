@@ -21,5 +21,7 @@ Why?
 
 Please find me an OS X touch screen device first.
 
+(But you can still test it under OS X)
+
 ##Copy-Left
 Licenced under GPLv3 or any higher version
