@@ -1,4 +1,4 @@
-# Yet-Another-Text-Editor
+# FATE / Another Text Editor
 A Text Editor Specialized for Small Touch Screen Devices
 
 ##Why New Wheel AGAIN
