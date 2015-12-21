@@ -17,6 +17,7 @@
     },
     "homepage": "https://github.com/z-shang/fate-another-text-editor#readme",
     "devDependencies": {
-        "electron-prebuilt": "^0.36.0"
+        "electron-prebuilt": "^0.36.0",
+        "fate-static-analysis" : "Z-Shang/fate-static-analysis"
     }
 }
