@@ -1,15 +1,148 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>YATE</title>
-    </head>
-    <body style="
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        user-select: none;">
-        <h1>Yet Another Text Editor</h1>
-        <div>
+
+<head>
+  <meta charset="UTF-8">
+  <title>FATE/Another Text Editor</title>
+  <link rel="stylesheet" href="./css/bootstrap.min.css">
+  <link rel="stylesheet" href="./css/font-awesome.min.css">
+  <link rel="stylesheet" href="./css/app.css">
+
+  <!-- FOR DEBUGGING USE. The following 2 lines make jQuery runs correctly on both inside and outside Atom Package -->
+  <script>
+    window.$ = window.jQuery = require("./js/jquery-2.1.4.js");
+  </script>
+  <script src="./js/jquery-2.1.4.js"></script>
+
+  <script src="./js/bootstrap.js"></script>
+</head>
+
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#"> FATE </a>
         </div>
-    </body>
+
+        <ul class="nav navbar-nav">
+          <!-- File Dropdown -->
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> File </a>
+            <ul class="dropdown-menu">
+              <li><a href="#">New Project</a></li>
+              <li><a href="#">New File</a></li>
+              <li><a href="#">Open Project</a></li>
+              <li role="separator" class="divider"></li>
+              <li><a href="#">Save</a></li>
+              <li><a href="#">Save As...</a></li>
+              <li><a href="#">Save All</a></li>
+              <li role="separator" class="divider"></li>
+              <li><a href="#">Quit</a></li>
+            </ul>
+          </li>
+
+          <!-- Edit Dropdown -->
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> Edit </a>
+            <ul class="dropdown-menu">
+              <li><a href="#">Undo</a></li>
+              <li><a href="#">Redo</a></li>
+              <li role="separator" class="divider"></li>
+              <li><a href="#">Cut</a></li>
+              <li><a href="#">Copy</a></li>
+              <li><a href="#">Paste</a></li>
+              <li role="separator" class="divider"></li>
+              <li><a href="#">Select Encoding</a></li>
+              <li><a href="#">Select Grammar</a></li>
+            </ul>
+          </li>
+
+          <!-- Find Dropdown -->
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> Find </a>
+            <ul class="dropdown-menu">
+              <li><a href="#">Find</a></li>
+              <li><a href="#">Replace</a></li>
+              <li><a href="#">Find in Path</a></li>
+              <li role="separator" class="divider"></li>
+              <li><a href="#">Find Next</a></li>
+              <li><a href="#">Find Previous</a></li>
+            </ul>
+          </li>
+
+          <!-- Tools Dropdown -->
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> Tools </a>
+            <ul class="dropdown-menu">
+              <li><a href="#">VCS Control</a></li>
+              <li><a href="#">Run Comfiguration</a></li>
+              <li><a href="#">Debug Tools</a></li>
+              <li role="separator" class="divider"></li>
+              <li><a href="#">Preferences</a></li>
+            </ul>
+          </li>
+        </ul>
+
+        <!-- Navbar right part -->
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="#">Debug</a></li>
+          <li><a href="#">Run</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <div class="container-fluid">
+    <div class="row">
+      <!-- Left Panel -->
+      <div class="col-md-3 fullheight nogutter" style="background: #cccccc;">
+        <div class="height-4 nogutter window">
+          <div class="window-title"> Project Manager </div>
+        </div>
+        <div class="height-6 nogutter keyboard">
+          <!-- TODO: Left handKeyboard -->
+        </div>
+      </div>
+      <!-- Code Panel -->
+      <div class="col-md-6 fullheight nogutter coding">
+        <div class="window-title"> Editor: main.js </div>
+      </div>
+      <!-- Right Panel -->
+      <div class="col-md-3 fullheight nogutter">
+        <div class="height-4 nogutter window">
+          <div class="window-title"> Intelligent Code Analysis </div>
+          <div class="window-content">
+            <div class="intelligent">
+              <span class="label label-danger">Error</span>
+              line 5: 'scope' is not defined.
+            </div>
+            <div class="intelligent">
+              <span class="label label-danger">Error</span>
+              line 6: 'let' requires for ECMAScript 6.
+            </div>
+            <div class="intelligent">
+              <span class="label label-danger">Error</span>
+              line 7: 'const' requires for ECMAScript 6.
+            </div>
+            <div class="intelligent">
+              <span class="label label-warning">Warning</span>
+              line 22: 'foo' is defined but not use.
+            </div>
+            <div class="intelligent">
+              <span class="label label-warning">Warning</span>
+              line 27: 'bar' is defined but not use.
+            </div>
+          </div>
+        </div>
+        <div class="height-6 nogutter keyboard">
+          <!-- TODO: Righthand Keyboard -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</body>
+
 </html>

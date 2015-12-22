@@ -1,0 +1,113 @@
+body {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+  background: #000000;
+}
+
+::-webkit-scrollbar
+{
+    width: 8px;
+    height: 8px;
+    background-color: #272c34;
+}
+
+::-webkit-scrollbar-thumb
+{
+    border-radius: 10px;
+    background-color: #3c424c;
+}
+
+.navbar {
+  margin-bottom: 0px;
+}
+
+.dropdown-menu {
+  background-color: #3c424c;
+}
+
+.dropdown-menu>li>a {
+  color: #ddd;
+}
+
+.dropdown-menu .divider{
+  background-color: #4d535d;
+}
+
+.fullheight {
+  height: calc(100vh - 52px); /* 52px is the height of navbar*/
+}
+
+.halfheight {
+  height: calc((100vh - 52px) * 0.5);
+}
+
+.height-1 {
+  height: calc((100vh - 52px) * 0.1);
+}
+.height-2 {
+  height: calc((100vh - 52px) * 0.2);
+}
+.height-3 {
+  height: calc((100vh - 52px) * 0.3);
+}
+.height-4 {
+  height: calc((100vh - 52px) * 0.4);
+}
+.height-5 {
+  height: calc((100vh - 52px) * 0.5);
+}
+.height-6 {
+  height: calc((100vh - 52px) * 0.6);
+}
+.height-7 {
+  height: calc((100vh - 52px) * 0.7);
+}
+.height-8 {
+  height: calc((100vh - 52px) * 0.8);
+}
+.height-9 {
+  height: calc((100vh - 52px) * 0.9);
+}
+.height-10 {
+  height: calc((100vh - 52px) * 1.0);
+}
+
+.nogutter {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.window{
+  background-color: #272c34;
+}
+
+.window-title {
+  width: 100%;
+  color: #ffffff;
+  padding: 7px 7px 7px 10px;
+  background-color: #20252b;
+}
+
+.window-content{
+  width: 100%;
+  height: calc(100% - 34px);
+  overflow-y: auto;
+  overflow-x: hidden;
+  color: #cccccc;
+}
+
+.keyboard {
+  background-color: #2e3238;
+}
+
+.coding {
+  background: #2b323c;
+  overflow: auto;
+}
+
+.intelligent {
+  width: 100%;
+  padding: 0 15px 0 15px;
+  line-height: 2.0;
+}
