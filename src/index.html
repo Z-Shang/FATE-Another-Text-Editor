@@ -4,8 +4,9 @@
 <head>
   <meta charset="UTF-8">
   <title>FATE/Another Text Editor</title>
-  <link rel="stylesheet" href="./css/bootstrap.min.css">
-  <link rel="stylesheet" href="./css/font-awesome.min.css">
+  <link rel="stylesheet" href="./css/bootstrap.css">
+  <link rel="stylesheet" href="./css/font-awesome.css">
+  <link rel="stylesheet" href="./css/ztree.css">
   <link rel="stylesheet" href="./css/app.css">
 
   <!-- FOR DEBUGGING USE. The following 2 lines make jQuery runs correctly on both inside and outside Atom Package -->
@@ -13,7 +14,7 @@
     window.$ = window.jQuery = require("./js/jquery-2.1.4.js");
   </script>
   <script src="./js/jquery-2.1.4.js"></script>
-
+  <script src="./js/jquery.ztree.all-3.5.js"></script>
   <script src="./js/bootstrap.js"></script>
 </head>
 
@@ -21,7 +22,7 @@
   <!-- Navbar -->
   <nav class="navbar navbar-inverse">
     <div class="container-fluid">
-      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <div class="collapse navbar-collapse">
         <div class="navbar-header">
           <a class="navbar-brand" href="#"> FATE </a>
         </div>
@@ -97,20 +98,42 @@
   <div class="container-fluid">
     <div class="row">
       <!-- Left Panel -->
-      <div class="col-md-3 fullheight nogutter" style="background: #cccccc;">
+      <div class="col-xs-3 fullheight nogutter">
         <div class="height-4 nogutter window">
           <div class="window-title"> Project Manager </div>
+          <div class="window-content ztree" id="project-tree">
+            <script>
+              var setting = {};
+
+              var nodes = [{
+                name: "Project",
+                children: [{
+                  name: "assert",
+                  children: [{
+                    name: "hello.png"
+                  }]
+                },{
+                  name: "main.js"
+                }, {
+                  name: "script.js"
+                }]
+              }];
+              $(document).ready(function() {
+                $.fn.zTree.init($("#project-tree"), setting, nodes);
+              });
+            </script>
+          </div>
         </div>
         <div class="height-6 nogutter keyboard">
           <!-- TODO: Left handKeyboard -->
         </div>
       </div>
       <!-- Code Panel -->
-      <div class="col-md-6 fullheight nogutter coding">
+      <div class="col-xs-6 fullheight nogutter coding">
         <div class="window-title"> Editor: main.js </div>
       </div>
       <!-- Right Panel -->
-      <div class="col-md-3 fullheight nogutter">
+      <div class="col-xs-3 fullheight nogutter">
         <div class="height-4 nogutter window">
           <div class="window-title"> Intelligent Code Analysis </div>
           <div class="window-content">
