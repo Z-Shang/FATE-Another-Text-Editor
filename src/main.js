@@ -2,19 +2,32 @@
 const electron = require('electron');
 const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
+const Menu = electron.Menu;
 
 let mainWindow = null;
 
-app.on('window-all-closed', function(){
-    app.quit();
+if(process.platform == 'darwin'){
+  Menu.setApplicationMenu(new Menu());
+  // Delete the menu items on Mac OS X devices.
+}
+
+app.on('window-all-closed', function() {
+  app.quit();
 });
 
 app.on('ready', function() {
-    mainWindow = new BrowserWindow({width: 1280, height: 800});
+  mainWindow = new BrowserWindow({
+    width: 1280,
+    height: 800,
+    minWidth: 992,
+    minHeight: 310
+  });
 
-    mainWindow.loadURL('file://' + __dirname + '/index.html');
+  mainWindow.setMenu(null); // Diable the Native Menu on Windows, use Context Menu inside the HTML.
+  mainWindow.loadURL('file://' + __dirname + '/index.html');
+  mainWindow.show();
 
-    mainWindow.on('closed', function(){
-        mainWindow = null;
-    });
+  mainWindow.on('closed', function() {
+    mainWindow = null;
+  });
 });
