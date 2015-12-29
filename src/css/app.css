@@ -170,3 +170,7 @@ float: right!important;
   padding: 0 15px 0 15px;
   line-height: 2.0;
 }
+
+fate-keyboard {
+  background-color: #CCCCCC;
+}
