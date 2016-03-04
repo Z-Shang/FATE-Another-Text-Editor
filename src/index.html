@@ -151,11 +151,7 @@
             <div class="window-title"> Intelligent Code Analysis </div>
             <div class="window-content">
               <div class="intelligent">
-                <intelligent-hint level="Error" msg="line 5: 'scope' is not defined."></intelligent-hint>
-                <intelligent-hint level="Error" msg="line 6: 'let' requires for ECMAScript 6."></intelligent-hint>
-                <intelligent-hint level="Error" msg="line 7: 'const' requires for ECMAScript 6."></intelligent-hint>
-                <intelligent-hint level="Warning" msg="line 22: 'foo' is defined but not use."></intelligent-hint>
-                <intelligent-hint level="Warning" msg="line 27: 'bar' is defined but not use."></intelligent-hint>
+                <intelligent-hint v-for="info in hint.list" :level="info[0]" :msg="info[1]"></intelligent-hint>
               </div>
             </div>
             <div class="height-1 nogutter spell">
