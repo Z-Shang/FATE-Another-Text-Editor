@@ -14,165 +14,157 @@
     window.$ = window.jQuery = require("./js/jquery-2.1.4.js");
   </script>
   <script src="./js/jquery-2.1.4.js"></script>
+  <script src="./js/vue.js"></script>
   <script src="./js/jquery.ztree.all-3.5.js"></script>
   <script src="./js/bootstrap.js"></script>
   <script src="./js/editor.js"></script>
 </head>
 
 <body>
-  <!-- Navbar -->
-  <nav class="navbar navbar-inverse">
+  <div id="app">
+    <!-- Navbar -->
+    <nav class="navbar navbar-inverse">
+      <div class="container-fluid">
+        <div class="collapse navbar-collapse">
+          <div class="navbar-header">
+            <a class="navbar-brand" href="#"> FATE </a>
+          </div>
+
+          <ul class="nav navbar-nav">
+            <!-- File Dropdown -->
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> File </a>
+              <ul class="dropdown-menu">
+                <li><a href="#">New File</a></li>
+                <li><a href="#">Open File</a></li>
+                <li><a href="#">New Directory</a></li>
+                <li><a href="#">Open Directory</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a href="#">Save</a></li>
+                <li><a href="#">Save As...</a></li>
+                <li><a href="#">Save All</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a href="#">Quit</a></li>
+              </ul>
+            </li>
+
+            <!-- Edit Dropdown -->
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> Edit </a>
+              <ul class="dropdown-menu">
+                <li><a href="#">Undo</a></li>
+                <li><a href="#">Redo</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a href="#">Cut</a></li>
+                <li><a href="#">Copy</a></li>
+                <li><a href="#">Paste</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a href="#">Select Encoding</a></li>
+                <li><a href="#">Select Grammar</a></li>
+              </ul>
+            </li>
+
+            <!-- Find Dropdown -->
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> Find </a>
+              <ul class="dropdown-menu">
+                <li><a href="#">Find</a></li>
+                <li><a href="#">Replace</a></li>
+                <li><a href="#">Find in Path</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a href="#">Find Next</a></li>
+                <li><a href="#">Find Previous</a></li>
+              </ul>
+            </li>
+
+            <!-- Tools Dropdown -->
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> Tools </a>
+              <ul class="dropdown-menu">
+                <li><a href="#">VCS Control</a></li>
+                <li><a href="#">Run Configuration</a></li>
+                <li><a href="#">Debug Tools</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a href="#">Preferences</a></li>
+              </ul>
+            </li>
+          </ul>
+
+          <!-- Navbar right part -->
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="#">Debug</a></li>
+            <li><a href="#">Run</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
     <div class="container-fluid">
-      <div class="collapse navbar-collapse">
-        <div class="navbar-header">
-          <a class="navbar-brand" href="#"> FATE </a>
-        </div>
+      <div class="row">
+        <!-- Left Panel -->
+        <div class="col-xs-3 fullheight nogutter">
+          <div class="height-4 nogutter window">
+            <div class="window-title"> Project Manager </div>
+            <div class="window-content ztree" id="project-tree">
+              <script>
+                var setting = {};
 
-        <ul class="nav navbar-nav">
-          <!-- File Dropdown -->
-          <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> File </a>
-            <ul class="dropdown-menu">
-              <li><a href="#">New File</a></li>
-              <li><a href="#">Open File</a></li>
-              <li><a href="#">New Directory</a></li>
-              <li><a href="#">Open Directory</a></li>
-              <li role="separator" class="divider"></li>
-              <li><a href="#">Save</a></li>
-              <li><a href="#">Save As...</a></li>
-              <li><a href="#">Save All</a></li>
-              <li role="separator" class="divider"></li>
-              <li><a href="#">Quit</a></li>
-            </ul>
-          </li>
-
-          <!-- Edit Dropdown -->
-          <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> Edit </a>
-            <ul class="dropdown-menu">
-              <li><a href="#">Undo</a></li>
-              <li><a href="#">Redo</a></li>
-              <li role="separator" class="divider"></li>
-              <li><a href="#">Cut</a></li>
-              <li><a href="#">Copy</a></li>
-              <li><a href="#">Paste</a></li>
-              <li role="separator" class="divider"></li>
-              <li><a href="#">Select Encoding</a></li>
-              <li><a href="#">Select Grammar</a></li>
-            </ul>
-          </li>
-
-          <!-- Find Dropdown -->
-          <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> Find </a>
-            <ul class="dropdown-menu">
-              <li><a href="#">Find</a></li>
-              <li><a href="#">Replace</a></li>
-              <li><a href="#">Find in Path</a></li>
-              <li role="separator" class="divider"></li>
-              <li><a href="#">Find Next</a></li>
-              <li><a href="#">Find Previous</a></li>
-            </ul>
-          </li>
-
-          <!-- Tools Dropdown -->
-          <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> Tools </a>
-            <ul class="dropdown-menu">
-              <li><a href="#">VCS Control</a></li>
-              <li><a href="#">Run Configuration</a></li>
-              <li><a href="#">Debug Tools</a></li>
-              <li role="separator" class="divider"></li>
-              <li><a href="#">Preferences</a></li>
-            </ul>
-          </li>
-        </ul>
-
-        <!-- Navbar right part -->
-        <ul class="nav navbar-nav navbar-right">
-          <li><a href="#">Debug</a></li>
-          <li><a href="#">Run</a></li>
-        </ul>
-      </div>
-    </div>
-  </nav>
-  <div class="container-fluid">
-    <div class="row">
-      <!-- Left Panel -->
-      <div class="col-xs-3 fullheight nogutter">
-        <div class="height-4 nogutter window">
-          <div class="window-title"> Project Manager </div>
-          <div class="window-content ztree" id="project-tree">
-            <script>
-              var setting = {};
-
-              var nodes = [{
-                name: "Project",
-                children: [{
-                  name: "assert",
+                var nodes = [{
+                  name: "Project",
                   children: [{
-                    name: "hello.png"
+                    name: "assert",
+                    children: [{
+                      name: "hello.png"
+                    }]
+                  }, {
+                    name: "main.js"
+                  }, {
+                    name: "script.js"
                   }]
-                },{
-                  name: "main.js"
-                }, {
-                  name: "script.js"
-                }]
-              }];
-              $(document).ready(function() {
-                $.fn.zTree.init($("#project-tree"), setting, nodes);
-              });
-            </script>
+                }];
+                $(document).ready(function() {
+                  $.fn.zTree.init($("#project-tree"), setting, nodes);
+                });
+              </script>
+            </div>
+          </div>
+          <div class="height-1 nogutter spell">
+            <!-- TODO: Intelligent Spelling -->
+          </div>
+          <div class="height-5 nogutter keyboard">
+            <fate-keyboard side="left"></fate-keyboard>
           </div>
         </div>
-        <div class="height-6 nogutter keyboard">
-          <!-- TODO: Left handKeyboard -->
-          <fate-keyboard side='left'></fate-keyboard>
-        </div>
-      </div>
-      <!-- Code Panel -->
-      <div class="col-xs-6 fullheight nogutter coding">
-        <div class="window-title"> Editor: main.js </div>
-        <div class="window-content">
-            <fate-editor>Reserved For Future</fate-editor>
-        </div>
-      </div>
-      <!-- Right Panel -->
-      <div class="col-xs-3 fullheight nogutter">
-        <div class="height-4 nogutter window">
-          <div class="window-title"> Intelligent Code Analysis </div>
+        <!-- Code Panel -->
+        <div class="col-xs-6 fullheight nogutter coding">
+          <div class="window-title"> Editor: main.js </div>
           <div class="window-content">
-            <div class="intelligent">
-              <span class="label label-danger">Error</span>
-              line 5: 'scope' is not defined.
-            </div>
-            <div class="intelligent">
-              <span class="label label-danger">Error</span>
-              line 6: 'let' requires for ECMAScript 6.
-            </div>
-            <div class="intelligent">
-              <span class="label label-danger">Error</span>
-              line 7: 'const' requires for ECMAScript 6.
-            </div>
-            <div class="intelligent">
-              <span class="label label-warning">Warning</span>
-              line 22: 'foo' is defined but not use.
-            </div>
-            <div class="intelligent">
-              <span class="label label-warning">Warning</span>
-              line 27: 'bar' is defined but not use.
-            </div>
+            <fate-editor></fate-editor>
           </div>
         </div>
-        <div class="height-6 nogutter keyboard">
-          <!-- TODO: Righthand Keyboard -->
-          <fate-keyboard side='right'></fate-keyboard>
+        <!-- Right Panel -->
+        <div class="col-xs-3 fullheight nogutter">
+          <div class="height-4 nogutter window">
+            <div class="window-title"> Intelligent Code Analysis </div>
+            <div class="window-content">
+              <div class="intelligent">
+                <intelligent-hint level="Error" msg="line 5: 'scope' is not defined."></intelligent-hint>
+                <intelligent-hint level="Error" msg="line 6: 'let' requires for ECMAScript 6."></intelligent-hint>
+                <intelligent-hint level="Error" msg="line 7: 'const' requires for ECMAScript 6."></intelligent-hint>
+                <intelligent-hint level="Warning" msg="line 22: 'foo' is defined but not use."></intelligent-hint>
+                <intelligent-hint level="Warning" msg="line 27: 'bar' is defined but not use."></intelligent-hint>
+              </div>
+            </div>
+            <div class="height-1 nogutter spell">
+              <!-- TODO: Intelligent Spelling -->
+            </div>
+            <div class="height-5 nogutter keyboard">
+              <fate-keyboard side="right"></fate-keyboard>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
-
-
 </body>
 
 </html>
