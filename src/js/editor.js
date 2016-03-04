@@ -1,18 +1,25 @@
 'use strict';
 Vue.config.debug = true
 
+var globalVar = {content: ''};
+
 Vue.component('fate-editor', {
-  template: "<input v-model='content'/>",
-  data: function() {
-    return {
-      content: '<b>Yoo Editor</b>'
-    };
+  template: "<div v-html='render()' id='edit-area'/>",
+  methods: {
+    render: function(){
+      return '<b>' + globalVar.content + '</b>';
+    }
   }
 });
 
 Vue.component('fate-keyboard-key', {
   props: ['key', 'width'],
-  template: '<button class="keyboard-key" v-bind:style="{width:100*width+\'%\'}">{{key}}</button>'
+  template: '<button class="keyboard-key" v-on:click="click" v-bind:style="{width:100*width+\'%\'}">{{key}}</button>',
+  methods: {
+    click: function(){
+      globalVar.content += this.key;
+    }
+  }
 })
 
 Vue.component('fate-keyboard', {
@@ -39,7 +46,8 @@ Vue.component('intelligent-hint', {
 });
 
 $(document).ready(function() {
-  new Vue({
-    el: '#app'
+  var vueApp = new Vue({
+    el: '#app',
+    data: globalVar
   });
 });

@@ -160,3 +160,14 @@ body {
 .keyboard-key:active{
   background-color: #49545a;
 }
+
+#edit-area{
+  background-color: rgba(0, 0, 0, 0);
+  border: 0;
+  outline: none;
+  width: 100%;
+  height: 100%;
+  -webkit-user-select: auto;
+  -moz-user-select: auto;
+  user-select: auto;
+}
