@@ -1,13 +1,21 @@
 'use strict';
 Vue.config.debug = true
 
-var globalVar = {content: ''};
+var globalVar = {
+  content: '',
+  shifted: false
+};
 
 Vue.component('fate-editor', {
   template: "<div v-html='render()' id='edit-area'/>",
   methods: {
-    render: function(){
-      return '<b>' + globalVar.content + '</b>';
+    render: function() {
+      var lines =  globalVar.content.split('\n');
+      var html = '';
+      for (var i = 0; i < lines.length; i++){
+        html += '<p>' + lines[i] + '</p>';
+      }
+      return html;
     }
   }
 });
@@ -16,8 +24,28 @@ Vue.component('fate-keyboard-key', {
   props: ['key', 'width'],
   template: '<button class="keyboard-key" v-on:click="click" v-bind:style="{width:100*width+\'%\'}">{{key}}</button>',
   methods: {
-    click: function(){
-      globalVar.content += this.key;
+    click: function() {
+      if (!globalVar.shifted) {
+        switch (this.key) {
+          case 'Tab':
+            globalVar.content += '&nbsp&nbsp';
+            break;
+          case 'Enter':
+            globalVar.content += '\n';
+            break;
+          case 'Del':
+            globalVar.content = globalVar.content.slice(0, -1);
+            break;
+          case 'Shift':
+            globalVar.shifted = true;
+            break;
+          default:
+            globalVar.content += this.key.toLowerCase();
+        }
+      } else {
+        globalVar.shifted = false;
+        globalVar.content += this.key;
+      }
     }
   }
 })
