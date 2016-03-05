@@ -18,28 +18,28 @@ var globalVar = {
 };
 
 Vue.component('fate-editor', {
-  template: "<div v-html='render()' id='edit-area'/>",
+  template: "<div id='edit-area'> <p v-for='line in render()' v-html='line'></p> </div>",
   methods: {
     render: function() {
-      var lines =  globalVar.editor.content.split('\n');
-      var html = '';
-      for (var i = 0; i < lines.length; i++){
-        html += '<p>' + lines[i] + '</p>';
-      }
-      return html;
+      return globalVar.editor.content.replace(/ /g, '&nbsp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').split('\n');
     }
   }
 });
 
 Vue.component('fate-keyboard-key', {
-  props: ['key', 'width'],
-  template: '<button class="keyboard-key" v-on:click="click" v-bind:style="{width:100*width+\'%\'}">{{key}}</button>',
+  props: ['key1', 'key2', 'width'],
+  template: '<button class="keyboard-key" v-on:click="click" v-bind:style="{width:100*width+\'%\'}">{{getKey()}}</button>',
   methods: {
+    getKey: function() {
+      if (globalVar.editor.shifted) {
+        return this.key2;
+      }
+      return this.key1;
+    },
     click: function() {
-      if (!globalVar.editor.shifted) {
-        switch (this.key) {
+      switch (this.getKey()) {
           case 'Tab':
-            globalVar.editor.content += '&nbsp&nbsp';
+            globalVar.editor.content += '  ';
             break;
           case 'Enter':
             globalVar.editor.content += '\n';
@@ -48,18 +48,15 @@ Vue.component('fate-keyboard-key', {
             globalVar.editor.content = globalVar.editor.content.slice(0, -1);
             break;
           case 'Shift':
-            globalVar.editor.shifted = true;
+            globalVar.editor.shifted = !globalVar.editor.shifted;
             break;
           case 'Space':
-            globalVar.editor.content += '&nbsp';
+            globalVar.editor.content += ' ';
             break;
           default:
-            globalVar.editor.content += this.key.toLowerCase();
+            globalVar.editor.content += this.getKey();
+            globalVar.editor.shifted = false;
         }
-      } else {
-        globalVar.editor.shifted = false;
-        globalVar.editor.content += this.key;
-      }
     }
   }
 })
@@ -68,7 +65,7 @@ Vue.component('fate-keyboard', {
   props: {
     layout: Array
   },
-  template: '<div id="fate-keyboard"><fate-keyboard-key v-for="key in layout" :width="key[1]" :key="key[0]"></fate-keyboard-key></div>'
+  template: '<div id="fate-keyboard"><fate-keyboard-key v-for="key in layout" :width="key[2]" :key1="key[0]" :key2="key[1]"></fate-keyboard-key></div>'
 });
 
 Vue.component('intelligent-hint', {
