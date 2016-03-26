@@ -2,10 +2,68 @@
 // The debug flag should be deleted when publishing.
 Vue.config.debug = true
 
+var Key = function(name, fn, ins, shift){
+    var tmp = Object();
+    tmp.name = name;
+    tmp.fn = fn;
+    tmp.ins = ins;
+    tmp.shift = shift;
+    return tmp;
+}
+
+var keyMap = {
+    "a" : Key("a", function() {}, "a", "A"),
+    "b" : Key("b", function() {}, "b", "B"),
+    "c" : Key("c", function() {}, "c", "C"),
+    "d" : Key("d", function() {}, "d", "D"),
+    "e" : Key("e", function() {}, "e", "E"),
+    "f" : Key("f", function() {}, "f", "F"),
+    "g" : Key("g", function() {}, "g", "G"),
+    "h" : Key("h", function() {}, "h", "H"),
+    "i" : Key("i", function() {}, "i", "I"),
+    "j" : Key("j", function() {}, "j", "J"),
+    "k" : Key("k", function() {}, "k", "K"),
+    "l" : Key("l", function() {}, "l", "L"),
+    "m" : Key("m", function() {}, "m", "M"),
+    "n" : Key("n", function() {}, "n", "N"),
+    "o" : Key("o", function() {}, "o", "O"),
+    "p" : Key("p", function() {}, "p", "P"),
+    "q" : Key("q", function() {}, "q", "Q"),
+    "r" : Key("r", function() {}, "r", "R"),
+    "s" : Key("s", function() {}, "s", "S"),
+    "t" : Key("t", function() {}, "t", "T"),
+    "u" : Key("u", function() {}, "u", "U"),
+    "v" : Key("v", function() {}, "v", "V"),
+    "w" : Key("w", function() {}, "w", "W"),
+    "x" : Key("x", function() {}, "x", "X"),
+    "y" : Key("y", function() {}, "y", "Y"),
+    "z" : Key("z", function() {}, "z", "Z"),
+    "1" : Key("1", function() {}, "1", "!"),
+    "2" : Key("2", function() {}, "2", "@"),
+    "3" : Key("3", function() {}, "3", "#"),
+    "4" : Key("4", function() {}, "4", "$"),
+    "5" : Key("5", function() {}, "5", "%"),
+    "6" : Key("6", function() {}, "6", "^"),
+    "7" : Key("7", function() {}, "7", "&"),
+    "8" : Key("8", function() {}, "8", "*"),
+    "9" : Key("9", function() {}, "9", "\("),
+    "0" : Key("0", function() {}, "0", "\)"),
+    "-" : Key("-", function() {}, "-", "_"),
+    "=" : Key("=", function() {}, "=", "+"),
+    "\[" : Key("\[", function() {}, "\[", "\{"),
+    "\]" : Key("\]", function() {}, "\]", "\}"),
+    "\\" : Key("\\", function() {}, "\\", "|"),
+    "\`" : Key("\\", function() {}, "\\", "\~"),
+    "," : Key(",", function() {}, ",", "\<"),
+    "." : Key(".", function() {}, ".", "\>"),
+    "/" : Key("/", function() {}, "/", "?"),
+}
+
 var globalVar = {
   editor: {
     content: '',
-    shifted: false
+    shifted: false,
+    mode: 'normal'
   },
   hint: {
     list: [
@@ -27,19 +85,25 @@ Vue.component('fate-editor', {
 });
 
 Vue.component('fate-keyboard-key', {
-  props: ['key1', 'key2', 'width'],
+  props: ['n', 'i','s', 'width'],
   template: '<button class="keyboard-key" v-on:click="click" v-bind:style="{width:100*width+\'%\'}">{{getKey()}}</button>',
   methods: {
     getKey: function() {
       if (globalVar.editor.shifted) {
-        return this.key2;
+        return this.s;
       }
-      return this.key1;
+      switch(globalVar.editor.mode){
+          case "normal":
+            return this.n;
+          case "insert":
+            return this.i;
+      }
+      return this.i;
     },
     click: function() {
       switch (this.getKey()) {
           case 'Tab':
-            globalVar.editor.content += '  ';
+            globalVar.editor.content += '\t';
             break;
           case 'Enter':
             globalVar.editor.content += '\n';
