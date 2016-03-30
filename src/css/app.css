@@ -171,3 +171,7 @@ body {
   -moz-user-select: auto;
   user-select: auto;
 }
+
+#cursor-highlight {
+    background-color: #797c7f;
+}

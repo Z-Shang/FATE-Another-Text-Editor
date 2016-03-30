@@ -3,11 +3,27 @@
 Vue.config.debug = true
 
 var globalVar = {
+    cursor: {
+        line : 0,
+        col: 0
+    },
     editor: {
-        content: '',
+        content: [['a', 'b','c']],
         shifted: false,
         mode: 'normal',
-        layer: 'key'
+        layer: 'key',
+        ctrl: false,
+        modKey: [
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+        ]
     },
     hint: {
         list: [
@@ -26,20 +42,27 @@ var globalVar = {
             "e": ["e", function() {}, "e", "E"],
             "f": ["f", function() {}, "f", "F"],
             "g": ["g", function() {}, "g", "G"],
-            "h": ["h", function() {}, "h", "H"],
+            "h": ["h", function() {
+                cursorColMove(-1);
+            }, "h", "H"],
             "i": ["i", function() {
                 globalVar.editor.mode = 'insert';
-                globalVar.editor.content = globalVar.editor.content.slice(0, -1);
+                //globalVar.editor.content = globalVar.editor.content.slice(0, -1);
+                cursorColMove(-1);
             }, "i", "I"],
             "j": ["j", function() {}, "j", "J"],
             "k": ["k", function() {}, "k", "K"],
-            "l": ["l", function() {}, "l", "L"],
+            "l": ["l", function() {
+                cursorColMove(1);
+            }, "l", "L"],
             "m": ["m", function() {}, "m", "M"],
             "n": ["n", function() {}, "n", "N"],
             "o": ["o", function() {}, "o", "O"],
             "p": ["p", function() {}, "p", "P"],
             "q": ["q", function() {}, "q", "Q"],
-            "r": ["r", function() {}, "r", "R"],
+            "r": ["r", function() {
+                globalVar.editor.mode = 'replace';
+            }, "r", "R"],
             "s": ["s", function() {}, "s", "S"],
             "t": ["t", function() {}, "t", "T"],
             "u": ["u", function() {}, "u", "U"],
@@ -86,10 +109,36 @@ var globalVar = {
         }}
 };
 
+var cursorColMove = function(offset){
+    if(globalVar.cursor.col + offset >= 0 && globalVar.cursor.col + offset <= globalVar.editor.content[globalVar.cursor.line].length - 1){
+        globalVar.cursor.col += offset;
+    }else if(globalVar.cursor.col + offset < 0){
+        globalVar.cursor.col = 0;
+    }else if(globalVar.cursor.col + offset > globalVar.editor.content[globalVar.cursor.line].length - 1){
+        globalVar.cursor.col = globalVar.editor.content[globalVar.cursor.line].length - 1;
+    }
+}
+
 Vue.component('fate-editor', {
     template: "<div id='edit-area'> <p v-for='line in render()' v-html='line'></p> </div>",
     methods: {
+        cat: function(lst, atl){
+            var str = '';
+            for(var i = 0; i < lst.length; i++){
+                if(atl && i == globalVar.cursor.col){
+                    str = str + "<span id='cursor-highlight'>" + lst[i] + "</span>";
+                }else{
+                    str = str + lst[i];
+                }
+            }
+            return str;
+        },
         render: function() {
+            var tmp = [];
+            for(var i = 0; i < globalVar.editor.content.length; i++){
+                tmp.push(this.cat(globalVar.editor.content[i], i == globalVar.cursor.line));
+            }
+            return tmp;
             return globalVar.editor.content.replace(/ /g, '&nbsp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').split('\n');
         }
     }
@@ -108,6 +157,9 @@ Vue.component('fate-keyboard-key', {
         },
         getKey: function() {
             return globalVar.keyMap.map[this.key1];
+        },
+        insert: function(str){
+            globalVar.editor.content[globalVar.cursor.line].splice(globalVar.cursor.col,0,str);
         },
         click: function() {
             var key = this.getKey();
@@ -133,23 +185,29 @@ Vue.component('fate-keyboard-key', {
                     switch (keyName) {
                     case 'Esc':
                         globalVar.editor.mode = 'normal';
+                        cursorColMove(-1);
+                        break;
                     case 'Tab':
-                        globalVar.editor.content += '\t';
+                        this.insert('\t');
+                        cursorColMove(1);
                         break;
                     case 'Enter':
-                        globalVar.editor.content += '\n';
+                        this.insert('\n');
                         break;
                     case 'Del':
-                        globalVar.editor.content = globalVar.editor.content.slice(0, -1);
+                        globalVar.editor.content[globalVar.cursor.line].splice(globalVar.cursor.col,1);
+                        cursorColMove(-1);
                         break;
                     case 'Shift':
                         globalVar.editor.shifted = !globalVar.editor.shifted;
                         break;
                     case 'Space':
-                        globalVar.editor.content += ' ';
+                        this.insert(' ');
+                        cursorColMove(1)
                         break;
                     default:
-                        globalVar.editor.content += keyName;
+                        this.insert(keyName);
+                        cursorColMove(1);
                         globalVar.editor.shifted = false;
                     }
                 }else if(globalVar.editor.mode == 'normal'){
@@ -171,6 +229,19 @@ Vue.component('fate-keyboard', {
     template: '<div id="fate-keyboard"><fate-keyboard-key v-for="key in layout" :width="key[2]" :key1="key[0]" :key2="key[1]"></fate-keyboard-key></div>'
 });
 
+Vue.component('cursor-position',{
+    template: '<a href="#">Line: {{currentLine()}} | Col: {{currentCol()}}</a>',
+    methods:{
+        currentLine: function(){
+            return globalVar.cursor.line + "";
+        },
+
+        currentCol: function(){
+            return globalVar.cursor.col + "";
+        }
+    }
+});
+
 Vue.component('layer-and-mode',{
     template: '<a href="#">Mode : {{currentMode()}} | Layer: {{currentLayer()}}</a>',
     methods:{
@@ -182,6 +253,8 @@ Vue.component('layer-and-mode',{
                 return 'Normal';
             case 'replace':
                 return 'Replace';
+            case 'visual':
+                return 'Visual';
             default:
                 return 'Normal';
             }
@@ -223,3 +296,21 @@ $(document).ready(function() {
         data: globalVar
     });
 });
+
+$(document).on("keyup", function(e){
+    var kc = e.keyCode;
+    if(kc == 27){
+        globalVar.editor.mode = 'normal';
+    }else{
+        handleKeyPress(e);
+    }
+});
+
+var keyCodeToKey = function(kc){
+}
+
+var handleKeyPress = function(event){
+    if(event.shiftKey){
+        globalVar.shifted = true;
+    }
+}
