@@ -1,7 +1,7 @@
 # FATE / Another Text Editor
 A Text Editor Specialized for Small Touch Screen Devices
 
-##Why New Wheel AGAIN
+## Why New Wheel AGAIN
 **TL;DR**
 
 'Cuz I Want
